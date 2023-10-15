@@ -27,6 +27,8 @@ docker-compose up -d
 
 This will run the backend at http://localhost:1955 and frontend at http://localhost:3000 addresses.
 
+---
+
 ### Docker
 
 #### Backend
@@ -61,6 +63,8 @@ This will run the backend at http://localhost:1955 and frontend at http://localh
 
 ##### Note: If you change the port for backend or backend container is not running the frontend application wont work. 
 
+---
+
 ### Without Docker
 
 #### Backend
@@ -94,8 +98,7 @@ This will run the backend at http://localhost:1955 and frontend at http://localh
     npm run dev
     ```
 
-
-
+---
 
 
 ### Used Images
