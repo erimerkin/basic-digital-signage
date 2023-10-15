@@ -55,11 +55,11 @@ export const NewTrackForm: React.FC<FormProps> = ({ onSubmit, hidden, setHidden 
     });
   }
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  async function handleSubmit(event: React.FormEvent): Promise<void> {
     event.preventDefault();
 
     // Reset the error object
-    let newError: FormError = {
+    const newError: FormError = {
       name: '',
       type: '',
       url: '',
@@ -101,11 +101,9 @@ export const NewTrackForm: React.FC<FormProps> = ({ onSubmit, hidden, setHidden 
     });
 
     setError(newError);
+  }
 
-
-  };
-
-  async function sendRequest() {
+  async function sendRequest(): Promise<void> {
     setLoading(true);
 
     const data: PlaylistTrack = {
@@ -115,7 +113,9 @@ export const NewTrackForm: React.FC<FormProps> = ({ onSubmit, hidden, setHidden 
       duration: Number(values.duration),
     };
 
-    axios.post('http://localhost:1955/api/add', data).then((response: AxiosResponse) => {
+    const apiUrl: string = "http://localhost:1955/api/add";
+
+    await axios.post(apiUrl, data).then((response: AxiosResponse) => {
       if (response.status === 200) {
         onSubmit(data);
         setRequestStatus({
@@ -124,12 +124,22 @@ export const NewTrackForm: React.FC<FormProps> = ({ onSubmit, hidden, setHidden 
         });
       }
     }).catch((error) => {
-      console.log(error);
-      setRequestStatus({
-        error: true,
-        message: error.response.data['message'],
-      });
+
+
+      if (error.response!.status === 400) {
+        setRequestStatus({
+          error: true,
+          message: error.response.data.message as string,
+        });
+      }
+      else {
+        setRequestStatus({
+          error: true,
+          message: 'An error occurred while adding the track',
+        });
+      }
     });
+
 
     setLoading(false);
   }
@@ -139,13 +149,13 @@ export const NewTrackForm: React.FC<FormProps> = ({ onSubmit, hidden, setHidden 
       {!hidden ?
         <form className="playlist-track-form" onSubmit={handleSubmit}>
           <div className='row'>
-          <h2>Add new media</h2>
-          <div className="spacer" />
-          <button className="close-button" onClick={() => {
-            setHidden(true);
-          }}>X</button>
+            <h2>Add new media</h2>
+            <div className="spacer" />
+            <button className="close-button" onClick={() => {
+              setHidden(true);
+            }}>X</button>
           </div>
-          
+
           <input
             type="text"
             name="name"

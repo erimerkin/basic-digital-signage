@@ -19,32 +19,11 @@ export const Playlist: React.FC = () => {
   const [playlist, setPlaylist] = useState<PlaylistTrack[]>([]);
   const [currentlyPlaying, setCurrentlyPlaying] = useState<PlayingTrack | null>(null);
   const [loading, setLoading] = useState(true);
-  const [formHidden, setFormHidden] = useState<boolean>(false);
+  const [formHidden, setFormHidden] = useState<boolean>(true);
 
-  useEffect(() => {
+  useEffect( () => {
     fetchPlaylist();
   }, []);
-
-  // If the playlist is empty, start playing the first track
-  useEffect(() => {
-    if (currentlyPlaying == null && playlist.length > 0) {
-      nextTrack({ track: playlist[0], index: 0 });
-    }
-  }, [playlist]);
-
-
-  // Fetch the playlist from the API
-  const fetchPlaylist = async () => {
-    setLoading(true);
-
-    axios.get('http://localhost:1955/api/playlist').then((response) => {
-      setPlaylist(response.data);
-    }).catch((error) => {
-      console.log(error);
-    });
-
-    setLoading(false);
-  }
 
   const nextTrack = (playlistTrack: PlayingTrack) => {
 
@@ -62,6 +41,33 @@ export const Playlist: React.FC = () => {
       nextTrack({ track: queuedTrack, index: nextIndex });
     }, playlistTrack.track.duration * 1000);
   }
+
+  // If the playlist is empty, start playing the first track
+  useEffect(() => {
+    if (currentlyPlaying == null && playlist.length > 0) {
+      nextTrack({ track: playlist[0], index: 0 });
+    }
+  }, [playlist, currentlyPlaying]);
+
+
+  // Fetch the playlist from the API
+  const fetchPlaylist = async () => {
+    setLoading(true);
+
+    const apiUrl: string = "http://localhost:1955/api/playlist"
+
+    await axios.get(apiUrl).then((response) => {
+      const playlistData: PlaylistTrack[] = response.data;
+
+      setPlaylist(playlistData);
+    }).catch((error) => {
+      console.log(error);
+    });
+
+    setLoading(false);
+  }
+
+  
 
   const addTrack = (track: PlaylistTrack) =>  {
     setPlaylist([...playlist, track]);
@@ -91,7 +97,9 @@ export const Playlist: React.FC = () => {
         )}
       </div>
       <div>
-        <CollapsibleButton callback={setFormHidden} />
+        <CollapsibleButton callback={() => {
+          setFormHidden(!formHidden);
+        }} />
         <NewTrackForm hidden={formHidden} onSubmit={addTrack} setHidden={setFormHidden} />
       </div>
     </div>

@@ -1,15 +1,13 @@
 import { useState } from "react";
 
 interface CollapsibleButtonProps {
-    callback: (isActive: boolean) => void;
-    }
+  callback: () => void;
+}
 
-const CollapsibleButton: React.FC<CollapsibleButtonProps> = ( { callback }) => {
-  const [isActive, setIsActive] = useState(false);
+const CollapsibleButton: React.FC<CollapsibleButtonProps> = ({ callback }) => {
 
   const toggleForm = () => {
-    setIsActive(!isActive);
-    callback(isActive);
+    callback();
   };
 
   return (
