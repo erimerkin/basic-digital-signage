@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { PlaylistTrack } from "../models/playlistTrack.model";
 import { playlistValidator } from "../validation/validator";
-import axios from 'axios';
 
 const playlistService = require('../services/playlist.service');
 
