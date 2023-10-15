@@ -1,0 +1,133 @@
+.collapsible-button {
+  position: fixed;
+  top: 24px;
+  right: 24px;
+  z-index: 1;
+  background-color: #0d5bae;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+// Button to close 
+.close-button {
+  color: #0d5bae;
+  background-color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.playlist-track-form {
+  font-family: 'Roboto', sans-serif;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  min-width: 300px;
+  max-width: 450px;
+  margin-right: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+.playlist-track-form input {
+  max-width: 95%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.submit-button {
+  max-width: 100%;
+  padding: 10px;
+  background-color: blue;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+
+.submit-button:disabled {
+  background-color: #ccc;
+
+}
+
+.playlist-track-form select {
+  max-width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: white;
+  border-radius: 3px;
+}
+
+.error {
+  color: red;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+}
+
+.success {
+  color: green;
+  font-size: 0.8rem;
+  margin-bottom: 10px;
+  margin-top: 12px;
+}
+
+#background-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  // flex: content;
+}
+.container {
+  align-items: center;
+  position: fixed;
+  top: 72px;
+  right: 72px;
+  width: 95%;
+  max-width: 500px;
+  max-height: 500px;
+}
+
+// Desktop
+@media (min-width: 768px) {
+  .container {
+    right: 20px;
+  }
+}
+
+// Mobile
+@media (max-width: 767px) {
+  .container {
+    bottom: 20px;
+    right: 0;
+  }
+}
+
+
+
+//// General row, column and spacer
+.spacer {
+  flex: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
